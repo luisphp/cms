@@ -22,11 +22,11 @@ class Post extends Model
     //Pertence a 1 categoria
     public function category(){
 
-    	return $this->belongsTo(Category::class)
+    	return $this->belongsTo(Category::class);
     }
 
     //Campos protegidos
-    protected $fillable [
+    protected $fillable = [
 
     	'user_id', 'category_id', 'name', 'slug', 'excerpt', 'body', 'status', 'file'
     ];
