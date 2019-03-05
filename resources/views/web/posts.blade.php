@@ -2,51 +2,39 @@
 
 @section('content')
 
-
-
 	<div class="container">
 		
 		<div class="col-md-12 col-md-offset-2">
 
-
 			<h2> Todos los post</h2>
-
 
 		@foreach($posts as $post)
 			
-			<div class="card">
+			<div class="card" style="margin: 20px">
 
 				<div class="card_header">
 
-					<h2 class="card-head">  {{$post->name}} </h2>
+					<h2 class="card-head" style="margin: 15px">  {{$post->name}} </h2>
 
 				</div>
 
-					<div class="card-body">
+						<div class="card-body">
 
-						@if($post->file)
+							@if($post->file)
 
 
-								<img src="{{$post->file}}" class="image-responsive">
+								<img src="{{$post->file}}" class="img-fluid">
 
-							
-
-						@endif	
+							@endif	
 						
 
-							<p class="card-text"> {{$post->excerpt}} </p>
+								<p class="card-text text-justify" style="margin: 10px"> {{$post->excerpt}} </p>
 
-
-
-							
-							<a href="#" class="card-link text-right">Leer más</a>
+								<a href="#" class="card-link text-right">Leer más</a>
 
 						</div>
 
-						</div>
-
-
-
+				</div>
 
 		@endforeach
 
