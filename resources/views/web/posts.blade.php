@@ -2,12 +2,11 @@
 
 @section('content')
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 
 	<div class="container">
 		
-		<div class="col-md-8 col-md-offset-2">
+		<div class="col-md-12 col-md-offset-2">
 
 
 			<h2> Todos los post</h2>
@@ -15,16 +14,15 @@
 
 		@foreach($posts as $post)
 			
-			<div class="panel panel-default">
+			<div class="card">
 
-				<div class="panel-heading">
+				<div class="card_header">
 
-
-					{{$post->name}}
-
+					<h2 class="card-head">  {{$post->name}} </h2>
 
 				</div>
-					<div class="panel-body">
+
+					<div class="card-body">
 
 						@if($post->file)
 
@@ -36,12 +34,12 @@
 						@endif	
 						
 
-							{{$post->excerpt}}
+							<p class="card-text"> {{$post->excerpt}} </p>
 
 
 
 							
-							<a href="#" class="pull-right">Leer más</a>
+							<a href="#" class="card-link text-right">Leer más</a>
 
 						</div>
 
