@@ -16,8 +16,8 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('user_id')->index()->unsigned();
-            $table->integer('category_id')->index()->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->integer('category_id')->unsigned();
 
             $table->string('name');
             $table->string('slug')->unique();
@@ -29,7 +29,7 @@ class CreatePostsTable extends Migration
             $table->string('file')->nullable();
             $table->timestamps();
 
-            //Relaciones
+            //Relaciones entre tablas
 
             $table->foreign('user_id')->references('id')->on('users')
             ->onDelete('cascade')->onUpdate('cascade');
