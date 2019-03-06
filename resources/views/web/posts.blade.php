@@ -30,7 +30,7 @@
 
 								<p class="card-text text-justify" style="margin: 10px"> {{$post->excerpt}} </p>
 
-								<a href="#" class="card-link text-right">Leer más</a>
+								<a href="{{ route('post', $post->slug) }}" class="card-link text-right">Leer más</a>
 
 						</div>
 
