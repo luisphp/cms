@@ -14,7 +14,7 @@ class Category extends Model
 
 
     //Campos protegidos
-    protected $fillable [
+    protected $fillable = [
 
     	'name', 'slug', 'body'
     ];

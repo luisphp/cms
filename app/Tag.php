@@ -14,7 +14,7 @@ class Tag extends Model
 
 
     //Campos protegidos
-    protected $fillable [
+    protected $fillable = [
 
     	'name', 'slug',
     ];
