@@ -15,7 +15,7 @@
 
 					<strong> Categoría: </strong> 
 
-								<a href="#" style="margin: 15px">  {{$post->category->name}} </a> 
+								<a href="{{ route('category', $post->category->slug) }}" style="margin: 15px">  {{$post->category->name}} </a> 
 
 								<hr>
 
@@ -24,7 +24,6 @@
 						<div class="card-body">
 
 							@if($post->file)
-
 
 								<img src="{{$post->file}}" class="img-fluid">
 
@@ -40,11 +39,11 @@
 					
 								<hr>
 
-								<strong> Etiquetas: </h2>
+								<strong> Etiquetas: </strong>>
 
 								@foreach($post->tags as $tag)
 
-									<a href="#" style="margin: 15px"> {{$tag->name}} </a>
+									<a href="{{ route('tag', $tag->slug) }}" style="margin: 15px"> {{$tag->name}} </a>
 
 								@endforeach
 

@@ -54,6 +54,27 @@
                                 </li>
                             @endif
                         @else
+
+                        <!--Aqui voy a a ñadir los enlaces de opciones para cuando el usuario entre en su perfil -->
+
+
+
+                        <li class="nav-item"> 
+
+                            <a class="nav-link" href="{{ route('tags.index') }}"> Etiquetas </a>
+
+                         </li>
+                         <li class="nav-item"> 
+
+                            <a class="nav-link" href="{{ route('categories.index') }}"> Categorias </a>
+
+                         </li>
+                          <li class="nav-item"> 
+
+                            <a class="nav-link" href="{{ route('posts.index') }}"> Entradas </a>
+
+                         </li>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
