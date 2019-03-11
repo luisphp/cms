@@ -114,9 +114,11 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
+        $name = Tag::where('id', $id)->pluck('name');
+        
         Tag::find($id)->delete();
 
-        return back()->with('info', 'Etiqueta eliminada correctamente');
+        return back()->with('info', 'Etiqueta: '. $name.' eliminada correctamente' );
         
     }
 }

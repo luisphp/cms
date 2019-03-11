@@ -2,11 +2,18 @@
 
 @section('content')
 
+		
+
 
 	<div class="container">
 		<div class="col-md-12">
 
-		<h2 > Etiquetas </h2>
+
+			
+
+		<h2> Etiquetas <span class="pull-right"> <a role="button" class="btn btn-primary float-right" href="{{ route('tags.create') }}"> Crear </a> </span> </h2>
+
+				
 
 
 		<table class="table table-responsive-md" style = "margin: 30px">
@@ -33,13 +40,22 @@
 						      <td>{{$tag->slug}}</td>
 						      <td><span class="badge badge-success">Active</span> </td>
 						      <td>
-						      		
-						      	    <button type="button" class="btn btn-sm btn-primary">Edit</button>
-									<button type="button" class="btn btn-sm btn-success">Active</button>
-									<button type="button" class="btn btn-sm btn-warning">Deactivate</button>
-									<button type="button" class="btn btn-sm btn-danger">Delete</button>
-									
+						      	
+						      	<div class="btn-group">
+						      		<a href="{{route('tags.show',$tag->id)}}" class="btn btn-sm btn-light"> Ver </a>
 
+						      		<a href="{{route('tags.edit',$tag->id)}}" class="btn btn-sm btn-primary"> Edit </a>
+						      	    
+									
+									
+									 {!! Form::open(['route' => ['tags.destroy', $tag->id],'method'=>'DELETE']) !!}
+
+									 <button class="btn btn-sm btn-danger">Delete</button>
+
+									 {!! Form::close() !!}
+
+									</div>
+								
 								</td>
 
 						    </tr>
