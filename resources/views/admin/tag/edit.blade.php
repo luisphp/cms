@@ -7,7 +7,7 @@
 
 			<h2 > Eitar etiqueta </h2>
 
-			{!! Form::model($tag, ['route'=>'tags.update',$tag->id],  'method' => 'PUT']) !!}
+			{!! Form::model([$tag, ['route'=>'tags.update',$tag->id],  'method' => 'PUT']) !!}
 
 			@include('admin.tag.form')
 

@@ -100,7 +100,7 @@
 
         <main class="py-4 container" style="margin-top: 20px;">
 
-            @if (session('status'))
+            @if (session('info'))
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 
                 {{ session('info') }}
@@ -137,5 +137,7 @@
             @yield('content')
         </main>
     </div>
+
+    @yield('scripts')
 </body>
 </html>
