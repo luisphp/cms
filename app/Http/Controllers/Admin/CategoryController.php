@@ -4,9 +4,26 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Category;
+use App\Http\Requests\CategoryStoreRequest;
+use App\Http\Requests\CategoryUpdateRequest;
 
 class CategoryController extends Controller
 {
+
+    //Para indicarle al sistema que para acceder a este controlador el usuario debe estar logeado usamos la siguiente linea de codigo:
+
+
+     public function __construct()
+    {
+        $this->middleware('auth');
+
+    }
+
+    //En el caso de que solo debamos proteger el acceso a una function/metodo debemos incluir  $this->middleware('auth');  al principio del metodo o funcion.
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +31,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::orderBy('id','DESC')->paginate(5);
+
+        return view ('admin.category.index', compact('categories'));
     }
 
     /**
@@ -24,7 +43,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+
+
+        return view ('admin.category.create');
     }
 
     /**
@@ -33,9 +54,12 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryStoreRequest $request)
     {
-        //
+
+        $category = Category::create($request->all());
+
+        return redirect()->route('categories.edit', $category->id)->with('info', 'Categoria creada exitosamente!');
     }
 
     /**
@@ -46,7 +70,10 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::find($id);
+
+
+        return view ('admin.category.show', compact('category'));
     }
 
     /**
@@ -57,7 +84,10 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::find($id);
+
+
+        return view ('admin.category.edit', compact('category'));
     }
 
     /**
@@ -67,9 +97,13 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryUpdateRequest $request, $id)
     {
-        //
+        $category = Category::find($id);
+
+        $category->fill($request->all())->save();
+
+        return redirect()->route('categories.edit', $category->id)->with('info', 'Categoria actualizada exitosamente!');
     }
 
     /**
@@ -80,6 +114,11 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $name = Category::where('id', $id)->pluck('name');
+        
+        Category::find($id)->delete();
+
+        return back()->with('info', 'Etiqueta: '. $name.' eliminada correctamente' );
+        
     }
 }

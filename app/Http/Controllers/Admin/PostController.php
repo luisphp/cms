@@ -2,11 +2,30 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Post;
+use App\Category;
+use App\Tag;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PostStoreRequest;
+use App\Http\Requests\PostUpdateRequest;
 
 class PostController extends Controller
 {
+
+    //Para indicarle al sistema que para acceder a este controlador el usuario debe estar logeado usamos la siguiente linea de codigo:
+
+
+     public function __construct()
+    {
+        $this->middleware('auth');
+
+    }
+
+    //En el caso de que solo debamos proteger el acceso a una function/metodo debemos incluir  $this->middleware('auth');  al principio del metodo o funcion.
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +33,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::orderBy('id','DESC')->where('user_id',auth()->user()->id)->paginate(5);
+
+        return view ('admin.post.index', compact('posts'));
     }
 
     /**
@@ -24,7 +45,12 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::orderBy('name','ASC')->pluck('name','id');
+
+        $tags = Tag::orderBy('name','ASC')->get();
+
+
+        return view ('admin.post.create',compact('categories','tags'));
     }
 
     /**
@@ -33,9 +59,12 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostStoreRequest $request)
     {
-        //
+
+        $post = Post::create($request->all());
+
+        return redirect()->route('posts.edit', $post->id)->with('info', 'Post creado exitosamente!');
     }
 
     /**
@@ -46,7 +75,10 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+
+
+        return view ('admin.post.show', compact('post'));
     }
 
     /**
@@ -57,7 +89,14 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+
+         $categories = Category::orderBy('name','ASC')->pluck('name','id');
+
+        $tags = Tag::orderBy('name','ASC')->get();
+
+
+        return view ('admin.post.edit', compact('post','categories','tags'));
     }
 
     /**
@@ -67,9 +106,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostUpdateRequest $request, $id)
     {
-        //
+        $post = Post::find($id);
+
+        $post->fill($request->all())->save();
+
+        return redirect()->route('posts.edit', $post->id)->with('info', 'Post actualizado exitosamente!');
     }
 
     /**
@@ -80,6 +123,11 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $name = Post::where('id', $id)->pluck('name');
+        
+        Post::find($id)->delete();
+
+        return back()->with('info', 'Etiqueta: '. $name.' eliminada correctamente' );
+        
     }
 }

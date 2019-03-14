@@ -28,7 +28,7 @@ class TagUpdateRequest extends FormRequest
 
             //Esta validacion verifique que al momento de actualizar ese slug no se verifique el slug que estamos tratando de actualizar ya que de lo contrario nunca sera posible actualizar por que encontrara como duplicado el slug 
             
-            'slug' => 'required|unique:tags,slug'.$this->$tag,
+            'slug' => 'required|unique:tags,slug,'.$this->tag,
         ];
     }
 }

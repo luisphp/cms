@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 class PageController extends Controller
 {
 
-	//Vista de las entradas
+	//Vista de todas las Entradas o Posts
     public function blog(){
 
     	$posts = Post::orderBy('id','DESC')->where('status', 'PUBLISHED')->paginate(3);
@@ -21,7 +21,7 @@ class PageController extends Controller
     	return view('web.posts', compact('posts'));
     }
 
-    //Vista de la entrada especificada por slug
+    //Vista de la entrada filtrando por Slug
     public function post($slug){
 
     	$post = Post::where('slug', $slug)->first();
@@ -30,7 +30,7 @@ class PageController extends Controller
     	return view('web.post', compact('post'));
     }
 
-    //Vista de entradas filtradas por categorias
+    //Vista de entradas filtradas por Categorias
      public function category($slug){
 
     	$category = Category::where('slug', $slug)->pluck('id')->first();
@@ -42,7 +42,7 @@ class PageController extends Controller
     }
 
 
-    //Vista de entradas filtradas por slug
+    //Vista de entradas filtradas por Tags
     public function tag($slug){
 
     	
