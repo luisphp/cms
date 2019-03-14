@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostStoreRequest;
 use App\Http\Requests\PostUpdateRequest;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -62,7 +63,24 @@ class PostController extends Controller
     public function store(PostStoreRequest $request)
     {
 
+        //Guardamos el Post
         $post = Post::create($request->all());
+
+
+        //Verificamos que tenemos una imagen
+        if($request->file('file')){
+
+
+            //En caso  de tenerla la guardamos en la clase Storage en la carpeta public en la carpeta image.
+            $path = Storage::disk('public')->put('image',$request->file('file'));
+
+            //Actualizamos el Post que acabamos de crear
+            $post->fill(['file' => asset($path)])->save();
+
+        }
+
+        // Aqui añadimos las etiquetas, para la creacion (como es este caso podemos usar "attach" o "sync")
+        $post->tags()->attach($request->get('tags'));
 
         return redirect()->route('posts.edit', $post->id)->with('info', 'Post creado exitosamente!');
     }
@@ -76,6 +94,9 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
+
+        //En esta seccion verificamos si el post que desea editar el usuario pertene a el de lo contrario no dejamos que lo edite
+        $this->authorize('pass',$post);
 
 
         return view ('admin.post.show', compact('post'));
@@ -91,7 +112,13 @@ class PostController extends Controller
     {
         $post = Post::find($id);
 
-         $categories = Category::orderBy('name','ASC')->pluck('name','id');
+        //En esta seccion verificamos si el post que desea editar el usuario pertene a el de lo contrario no dejamos que lo edite
+
+        $this->authorize('pass',$post);
+
+        //De ser positivo esto ultimo realiamos las otras consultas de lo contrario mostramos un mensaje que diga no estas autorizado para realizar esta acción.
+
+        $categories = Category::orderBy('name','ASC')->pluck('name','id');
 
         $tags = Tag::orderBy('name','ASC')->get();
 
@@ -110,7 +137,26 @@ class PostController extends Controller
     {
         $post = Post::find($id);
 
+        //Validacion del metodo update con respecto a la politica
+        $this->authorize('pass',$post);
+
+
         $post->fill($request->all())->save();
+
+           //Verificamos que tenemos una imagen
+        if($request->file('file')){
+
+
+            //En caso  de tenerla la guardamos en la clase Storage en la carpeta public en la carpeta image.
+            $path = Storage::disk('public')->put('image',$request->file('file'));
+
+            //Actualizamos el Post que acabamos de crear
+            $post->fill(['file' => asset($path)])->save();
+
+        }
+
+        // Aqui añadimos las etiquetas, para la creacion (como es este caso podemos usar "attach" o "sync")
+        $post->tags()->sync($request->get('tags'));
 
         return redirect()->route('posts.edit', $post->id)->with('info', 'Post actualizado exitosamente!');
     }
@@ -123,6 +169,11 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
+        $post = Post::find($id);
+
+        //Validacion del metodo update con respecto a la politica
+        $this->authorize('pass',$post);
+
         $name = Post::where('id', $id)->pluck('name');
         
         Post::find($id)->delete();

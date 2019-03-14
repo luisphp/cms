@@ -2,19 +2,10 @@
 
 @section('content')
 
-		
-
-
 	<div class="container">
 		<div class="col-md-12">
 
-
-			
-
 		<h2> Posts <span class="pull-right"> <a role="button" class="btn btn-primary float-right" href="{{ route('posts.create') }}"> Crear </a> </span> </h2>
-
-				
-
 
 		<table class="table table-responsive-md" style = "margin: 30px">
 				  <thead>
@@ -28,10 +19,7 @@
  		<tbody>
 
 		@foreach($posts as $post)
-
-
-
-						 
+ 
 						    <tr>
 						      
 						      <td>{{$post->id}}</td>
@@ -43,9 +31,7 @@
 						      		<a href="{{route('posts.show',$post->id)}}" class="btn btn-sm btn-light"> Ver </a>
 
 						      		<a href="{{route('posts.edit',$post->id)}}" class="btn btn-sm btn-primary"> Edit </a>
-						      	    
-									
-									
+						      	    	
 									 {!! Form::open(['route' => ['posts.destroy', $post->id],'method'=>'DELETE']) !!}
 
 									 <button class="btn btn-sm btn-danger">Delete</button>
@@ -58,8 +44,6 @@
 
 						    </tr>
 						    
-			
-
 		@endforeach
 
 			  </tbody>

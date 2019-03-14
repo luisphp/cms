@@ -39,11 +39,11 @@
 					
 								<hr>
 
-								<strong> Etiquetas: </strong>>
+								<strong> Etiquetas: </strong>
 
 								@foreach($post->tags as $tag)
 
-									<a href="{{ route('tag', $tag->slug) }}" style="margin: 15px"> {{$tag->name}} </a>
+									<a href="{{ route('tag', $tag->slug) }}" style="margin: 15px;"> {{ $tag->name }} </a>
 
 								@endforeach
 

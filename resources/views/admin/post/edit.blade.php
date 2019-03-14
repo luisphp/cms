@@ -9,7 +9,7 @@
 
 			 
 
-			{!! Form::model($post, ['route'=>['posts.update',$post->id],  'method' => 'PUT']) !!}
+			{!! Form::model($post, ['route'=>['posts.update',$post->id],  'method' => 'PUT', 'files' => true]) !!}
 
 			@include('admin.post.form')
 
