@@ -42,7 +42,7 @@
 
 	@foreach($tags as $tag)
 	<label>
-	{{ Form::checkbox('tags[]',  $tag->id) }} {{$tag->name}}
+	{{ Form::radio('tags[]',  $tag->id) }} {{$tag->name}}
 	</label>
 	@endforeach
 	
